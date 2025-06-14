@@ -1,10 +1,9 @@
-# render.yaml
 services:
   - type: web
     name: image-classifier-backend
     env: docker
     plan: free
-    region: oregon
+    region: ohio # Changed region as a test
     dockerfilePath: image-classifier-backend/Dockerfile
     buildContext: image-classifier-backend
     envVars:
@@ -19,7 +18,7 @@ services:
     name: image-classifier-frontend
     env: docker
     plan: free
-    region: oregon
+    region: ohio # Changed region as a test
     dockerfilePath: frontend/Dockerfile
     buildContext: frontend
     autoDeploy: true

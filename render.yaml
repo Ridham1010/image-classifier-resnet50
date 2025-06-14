@@ -1,6 +1,0 @@
-services:
-  - type: web
-    name: image-classifier
-    env: docker
-    plan: free
-    dockerComposePath: ./docker-compose.yaml

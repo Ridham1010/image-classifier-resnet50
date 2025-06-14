@@ -5,12 +5,13 @@ services:
     plan: free
     region: oregon
     dockerfilePath: image-classifier-backend/Dockerfile
-    buildContext: image-classifier-backend
+    buildContext: image-classifier-backend      # <-- Add this line
     envVars:
       - key: PYTHONUNBUFFERED
         value: "1"
     autoDeploy: true
     healthCheckPath: /
+
 
   - type: web
     name: image-classifier-frontend

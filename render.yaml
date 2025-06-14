@@ -1,16 +1,32 @@
+# render.yaml
 services:
   - type: web
     name: image-classifier-backend
     env: docker
     plan: free
     region: oregon
+    # Points to the Dockerfile within the image-classifier-backend directory
     dockerfilePath: image-classifier-backend/Dockerfile
-    buildContext: image-classifier-backend      # <-- Add this line
+    # Sets the build context to the image-classifier-backend directory
+    # This means commands like COPY . . in your Dockerfile will refer to files
+    # relative to image-classifier-backend/
+    buildContext: image-classifier-backend
     envVars:
       - key: PYTHONUNBUFFERED
         value: "1"
+      # IMPORTANT: Add your port environment variable here if your application
+      # is listening on a specific port. Render injects the PORT env var.
+      # Example for Flask/FastAPI/Uvicorn:
+      - key: PORT
+        value: "10000" # Or whatever port your app listens on internally, often 8000 or 5000.
+                      # Make sure your Dockerfile's CMD uses $PORT.
     autoDeploy: true
     healthCheckPath: /
+    # If your backend requires a specific startup command that isn't handled by your Dockerfile's CMD
+    # you can add a startCommand here. However, for Docker-based services, CMD in Dockerfile is preferred.
+    # If you remove the 'CMD' from Dockerfile, you would put it here, e.g.:
+    # startCommand: gunicorn app.main:app --bind 0.0.0.0:$PORT
+    # But it's usually better to define the main command within the Dockerfile itself.
 
 
   - type: web
@@ -22,3 +38,10 @@ services:
     buildContext: frontend
     autoDeploy: true
     healthCheckPath: /
+    # Frontend usually listens on a standard port as well.
+    # For Node.js/React apps, ensure the build process generates static files
+    # and a web server (like Nginx or a simple static file server) is configured
+    # in the Dockerfile to serve them.
+    envVars:
+      - key: PORT
+        value: "3000" # Common for Node.js/React dev servers, or use 80 for production web servers.

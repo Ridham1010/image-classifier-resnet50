@@ -19,15 +19,14 @@ services:
       # Example for Flask/FastAPI/Uvicorn:
       - key: PORT
         value: "10000" # Or whatever port your app listens on internally, often 8000 or 5000.
-                      # Make sure your Dockerfile's CMD uses $PORT.
+                      # Make sure your Dockerfile's CMD uses .
     autoDeploy: true
     healthCheckPath: /
     # If your backend requires a specific startup command that isn't handled by your Dockerfile's CMD
     # you can add a startCommand here. However, for Docker-based services, CMD in Dockerfile is preferred.
     # If you remove the 'CMD' from Dockerfile, you would put it here, e.g.:
-    # startCommand: gunicorn app.main:app --bind 0.0.0.0:$PORT
+    # startCommand: gunicorn app.main:app --bind 0.0.0.0:
     # But it's usually better to define the main command within the Dockerfile itself.
-
 
   - type: web
     name: image-classifier-frontend

@@ -15,8 +15,8 @@ app = FastAPI()
 # "http://localhost:3000" is where your React frontend runs.
 # "http://localhost" is good to include for general local development.
 origins = [
-    "http://localhost",
-    "http://localhost:3000", # Your React app's URL
+    "http://localhost:3000",
+    "https://image-classifier-frontend-h2p2.onrender.com", # Your React app's URL
 ]
 
 # Add CORSMiddleware to your FastAPI application

@@ -1,0 +1,27 @@
+version: '3.8' # Use a recent Docker Compose file format version
+
+services:
+  backend: # This is the service name (used for internal communication)
+    build:
+      context: ./image-classifier-backend # Docker will look for Dockerfile in this folder relative to docker-compose.yaml
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000" # Map host port 8000 to container port 8000
+    volumes:
+      # Mount your app code for live reloading during development
+      # If you update backend code, Uvicorn's --reload will pick it up
+      - ./image-classifier-backend/app:/app/app
+      # Ensure the model path is correct inside the container too.
+      # Since main.py expects it in app/, the path is /app/app/image_classification_model.pth
+      - ./image-classifier-backend/app/image_classification_model.pth:/app/app/image_classification_model.pth
+    environment:
+      PYTHONUNBUFFERED: 1 # Ensure Python output is not buffered
+
+  frontend:
+    build:
+      context: ./frontend # Docker will look for Dockerfile in the 'frontend' folder
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80" # Map host port 3000 to container port 80 (Nginx default)
+    depends_on:
+      - backend # This MUST match the service name defined above (backend:)

@@ -32,7 +32,7 @@ function App() {
     formData.append("file", selectedFile);
 
     try {
-      const response = await fetch('https://image-classifier-backend.onrender.com', {
+      const response = await fetch('https://image-classifier-backend.onrender.com/predict', {
         method: 'POST',
         body: formData,
       });

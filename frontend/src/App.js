@@ -58,6 +58,7 @@ function App() {
     <div className={`App ${darkMode ? 'dark-mode' : ''}`}>
       <header className="App-header d-flex justify-content-between align-items-center px-4">
         <h1>CIFAR-10 Image Classifier</h1>
+        <h3>You can predict the images of automobiles,trucks,airplanes,horses,cats,dogs,frogs etc.</h3>
         <div className="form-check form-switch text-white">
           <input
             className="form-check-input"
